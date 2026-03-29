@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
+import React, { useState } from 'react';
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);

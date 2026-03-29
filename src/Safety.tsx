@@ -108,7 +108,7 @@ export default function Safety() {
                 <ShieldCheck size={18} className="text-wsl-orange" />
                 <span className="text-xs font-black uppercase tracking-widest">Safety & Supervision</span>
               </div>
-              <h1 className="text-5xl md:text-7xl font-black text-navy tracking-tighter uppercase leading-[0.85] mb-6">
+              <h1 className="text-5xl md:text-7xl font-black text-navy tracking-tighter uppercase leading-[0.8] mb-4">
                 SAFETY, <br />
                 SUPERVISION, <br />
                 <span className="text-wsl-orange">AND CARE</span>
@@ -127,10 +127,10 @@ export default function Safety() {
                       {feature.icon}
                     </div>
                     <div>
-                      <h3 className="text-navy font-black text-lg uppercase tracking-tight mb-0.5 leading-tight">
+                      <h3 className="text-navy font-black text-base md:text-lg uppercase tracking-tight leading-tight">
                         {feature.title}
                       </h3>
-                      <p className="text-slate-500 font-bold text-[13px] leading-snug">
+                      <p className="text-slate-500 font-bold text-[11px] leading-snug mt-0.5">
                         {feature.desc}
                       </p>
                     </div>

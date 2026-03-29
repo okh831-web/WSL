@@ -136,11 +136,12 @@ function Home() {
 
   const navLinks = [
     { name: 'HOME', href: '/' },
-    { name: 'WHY', href: '#about' },
-    { name: 'EXPLORE', href: '#locations' },
-    { name: 'PARTICIPANTS', href: '#participants' },
+    { name: 'WHY', href: '/#about' },
+    { name: 'EXPLORE', href: '/#locations' },
+    { name: 'PARTICIPANTS', href: '/#participants' },
     { name: 'SAFETY', href: '/safety' },
-    { name: 'CONTACT', href: '#contact' },
+    { name: 'TESTIMONIALS', href: '/#testimonials' },
+    { name: 'CONTACT', href: '/#contact' },
   ];
 
   return (
@@ -161,7 +162,7 @@ function Home() {
           {/* Desktop Nav */}
           <div className="hidden lg:flex space-x-6 items-center">
             {navLinks.map((link) => (
-              link.href.startsWith('/') ? (
+              link.href.startsWith('/') && !link.href.includes('#') ? (
                 <Link 
                   key={link.name} 
                   to={link.href} 
@@ -182,6 +183,13 @@ function Home() {
                     if (link.name === 'CONTACT') {
                       e.preventDefault();
                       setIsContactModalOpen(true);
+                    } else if (link.href.includes('#') && window.location.pathname === '/') {
+                      e.preventDefault();
+                      const id = link.href.split('#')[1];
+                      const element = document.getElementById(id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
                     }
                   }}
                   className="text-white text-xs font-bold hover:text-wsl-orange transition-colors"
@@ -190,12 +198,12 @@ function Home() {
                 </a>
               )
             ))}
-            <button 
-              onClick={() => setIsContactModalOpen(true)}
+            <a 
+              href="/#contact"
               className="bg-wsl-orange text-white px-5 py-2 rounded text-xs font-black hover:brightness-110 transition-all"
             >
               BOOK NOW
-            </button>
+            </a>
           </div>
 
           {/* Mobile Menu Button */}
@@ -219,7 +227,7 @@ function Home() {
           >
             <button className="absolute top-6 right-6 text-white" onClick={() => setIsMenuOpen(false)}><X size={32} /></button>
             {navLinks.map((link) => (
-              link.href.startsWith('/') ? (
+              link.href.startsWith('/') && !link.href.includes('#') ? (
                 <Link 
                   key={link.name} 
                   to={link.href} 
@@ -243,6 +251,13 @@ function Home() {
                     if (link.name === 'CONTACT') {
                       e.preventDefault();
                       setIsContactModalOpen(true);
+                    } else if (link.href.includes('#') && window.location.pathname === '/') {
+                      e.preventDefault();
+                      const id = link.href.split('#')[1];
+                      const element = document.getElementById(id);
+                      if (element) {
+                        element.scrollIntoView({ behavior: 'smooth' });
+                      }
                     }
                   }}
                 >
@@ -250,15 +265,13 @@ function Home() {
                 </a>
               )
             ))}
-            <button 
-              onClick={() => {
-                setIsMenuOpen(false);
-                setIsContactModalOpen(true);
-              }}
+            <a 
+              href="/#contact"
+              onClick={() => setIsMenuOpen(false)}
               className="bg-wsl-orange text-white px-10 py-4 rounded font-black text-xl"
             >
               BOOK NOW
-            </button>
+            </a>
           </motion.div>
         )}
       </AnimatePresence>
@@ -331,14 +344,14 @@ function Home() {
             </div>
 
             {/* Main Bilingual Title */}
-            <div className="space-y-2 mb-8">
-              <h1 className="text-white text-5xl md:text-8xl font-black leading-none tracking-tighter uppercase">
+            <div className="space-y-1 mb-6">
+              <h1 className="text-white text-5xl md:text-8xl font-black leading-[0.85] tracking-tighter uppercase">
                 ENGLISH<br />
                 TRAVEL ABROAD<br />
                 PROGRAM
               </h1>
-              <div className="h-2 w-32 bg-wsl-orange"></div>
-              <h2 className="text-blue-100 text-2xl md:text-4xl font-bold tracking-tight">
+              <div className="h-1.5 w-24 bg-wsl-orange"></div>
+              <h2 className="text-blue-100 text-xl md:text-3xl font-bold tracking-tight">
                 미국 어학연수 프로그램
               </h2>
             </div>
@@ -358,7 +371,7 @@ function Home() {
               <motion.a 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                href="#contact"
+                href="/#contact"
                 className="bg-white text-navy px-10 py-4 rounded-full font-black text-lg shadow-xl hover:bg-wsl-orange hover:text-white transition-all flex items-center gap-3"
               >
                 BOOK NOW / 지금 예약하기 <ArrowRight size={22} />
@@ -431,12 +444,12 @@ function Home() {
                   <div className={`w-20 h-20 bg-navy text-white rounded-2xl flex items-center justify-center mb-10 shadow-2xl transition-all duration-500 transform group-hover:-rotate-12 ${item.bgColor}`}>
                     {item.icon}
                   </div>
-                  <h3 className={`text-2xl font-black uppercase mb-1 tracking-tight ${item.color}`}>{item.title}</h3>
-                  <h4 className="text-navy/60 text-lg font-bold mb-6">{item.titleKo}</h4>
-                  <p className="text-slate-500 leading-relaxed text-lg font-medium mb-4">
+                  <h3 className={`text-2xl font-black uppercase mb-0.5 tracking-tight ${item.color}`}>{item.title}</h3>
+                  <h4 className="text-navy/60 text-base font-bold mb-4">{item.titleKo}</h4>
+                  <p className="text-slate-500 leading-relaxed text-lg font-medium mb-2">
                     {item.desc}
                   </p>
-                  <p className="text-slate-400 text-sm font-medium leading-relaxed mb-6">
+                  <p className="text-slate-400 text-sm font-medium leading-relaxed mb-4">
                     {item.descKo}
                   </p>
                   {item.title === "Safety & Care" && (
@@ -460,10 +473,10 @@ function Home() {
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
             <div>
               <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Seasonal Journeys / 시즌별 여정</span>
-              <h2 className="text-navy text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
+              <h2 className="text-navy text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
                 EXPLORE <br /><span className="text-slate-300">DESTINATIONS</span>
               </h2>
-              <h3 className="text-navy/40 text-2xl md:text-3xl font-bold mt-4 uppercase">시즌별 목적지 탐험</h3>
+              <h3 className="text-navy/40 text-xl md:text-2xl font-bold mt-2 uppercase">시즌별 목적지 탐험</h3>
             </div>
             <p className="text-slate-500 max-w-md text-lg font-medium leading-relaxed">
               We offer unique programs tailored to the best experiences each season has to offer in the United States.<br />
@@ -587,12 +600,12 @@ function Home() {
       </section>
 
       {/* Testimonials Section - Modern Layout */}
-      <section className="py-32 bg-gray-50">
+      <section id="testimonials" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-24">
-            <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Success Stories / 성공 사례</span>
-            <h2 className="text-navy text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none mb-4">TESTIMONIALS</h2>
-            <h3 className="text-navy/40 text-2xl font-bold uppercase">수강 후기</h3>
+          <div className="text-center mb-16">
+            <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-4 block">Success Stories / 성공 사례</span>
+            <h2 className="text-navy text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.8] mb-2">TESTIMONIALS</h2>
+            <h3 className="text-navy/40 text-xl md:text-2xl font-bold uppercase">수강 후기</h3>
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">

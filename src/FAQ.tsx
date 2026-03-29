@@ -72,22 +72,22 @@ export default function FAQ() {
       </header>
 
       {/* Hero Section */}
-      <section className="bg-gray-50 py-20 border-b border-slate-100">
+      <section className="bg-gray-50 py-16 border-b border-slate-100">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-wsl-orange/10 text-wsl-orange px-4 py-2 rounded-full mb-6">
+            <div className="inline-flex items-center gap-2 bg-wsl-orange/10 text-wsl-orange px-4 py-2 rounded-full mb-4">
               <HelpCircle size={18} />
               <span className="text-xs font-black uppercase tracking-widest">Support Center</span>
             </div>
-            <h1 className="text-5xl md:text-7xl font-black text-navy tracking-tighter uppercase leading-none mb-6">
+            <h1 className="text-5xl md:text-7xl font-black text-navy tracking-tighter uppercase leading-[0.8] mb-4">
               FREQUENTLY ASKED <br />
               <span className="text-wsl-orange">QUESTIONS</span>
             </h1>
-            <p className="text-slate-500 font-bold text-lg uppercase tracking-tight">
+            <p className="text-slate-500 font-bold text-sm uppercase tracking-widest opacity-80">
               자주 묻는 질문들 — 궁금한 점을 확인해보세요
             </p>
           </motion.div>
@@ -108,13 +108,13 @@ export default function FAQ() {
               >
                 <button 
                   onClick={() => setActiveIndex(activeIndex === index ? null : index)}
-                  className="w-full flex items-center justify-between p-8 text-left bg-white hover:bg-gray-50 transition-colors"
+                  className="w-full flex items-center justify-between py-5 px-8 text-left bg-white hover:bg-gray-50 transition-colors"
                 >
                   <div>
-                    <h3 className="text-navy font-black text-lg uppercase tracking-tight mb-1">
+                    <h3 className="text-navy font-black text-base md:text-lg uppercase tracking-tight leading-tight">
                       {faq.question}
                     </h3>
-                    <p className="text-slate-400 font-bold text-xs uppercase">
+                    <p className="text-slate-400 font-bold text-[9px] uppercase tracking-widest mt-0.5">
                       {faq.questionKr}
                     </p>
                   </div>
@@ -131,12 +131,12 @@ export default function FAQ() {
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <div className="p-8 pt-0 bg-gray-50/50">
-                        <div className="w-12 h-1 bg-wsl-orange mb-6"></div>
-                        <p className="text-slate-600 font-medium leading-relaxed mb-4">
+                      <div className="px-8 pb-5 bg-gray-50/50">
+                        <div className="w-10 h-0.5 bg-wsl-orange mb-3"></div>
+                        <p className="text-slate-600 font-medium text-sm md:text-base leading-relaxed mb-1.5">
                           {faq.answer}
                         </p>
-                        <p className="text-slate-500 font-bold text-sm leading-relaxed italic">
+                        <p className="text-slate-500 font-bold text-xs leading-relaxed italic opacity-80">
                           {faq.answerKr}
                         </p>
                       </div>
