@@ -3,8 +3,8 @@
 @theme {
   --color-navy: #001f3f;
   --color-navy-light: #003366;
-  --color-wsl-orange: #FF6321;
-  --color-wsl-teal: #004d61;
+  --color-jsl-orange: #FF6321;
+  --color-jsl-teal: #004d61;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Anton", sans-serif;
 }

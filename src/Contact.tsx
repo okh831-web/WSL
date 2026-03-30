@@ -13,8 +13,20 @@ import React, { useState } from 'react';
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const phone = formData.get('phone') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    const subject = encodeURIComponent(`[교육 상담 신청] ${name}님`);
+    const body = encodeURIComponent(
+      `성함: ${name}\n연락처: ${phone}\n이메일: ${email}\n\n문의 내용:\n${message}`
+    );
+
+    window.location.href = `mailto:byujinman12831@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
     setTimeout(() => setSubmitted(false), 5000);
   };
@@ -29,13 +41,13 @@ export default function Contact() {
               <GraduationCap className="text-navy" size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-bold text-sm tracking-tight leading-none">WSL — WILLIAM'S SCHOOL OF LANGUAGES</span>
+              <span className="text-white font-bold text-sm tracking-tight leading-none">JSL — JAMES'S SCHOOL OF LANGUAGES</span>
               <span className="text-blue-300 text-[10px] font-bold tracking-wider">ENGLISH TRAVEL ABROAD PROGRAM</span>
             </div>
           </Link>
           <Link 
             to="/" 
-            className="flex items-center gap-2 text-white text-xs font-bold hover:text-wsl-orange transition-colors"
+            className="flex items-center gap-2 text-white text-xs font-bold hover:text-jsl-orange transition-colors"
           >
             <ArrowLeft size={16} /> BACK TO HOME
           </Link>
@@ -51,7 +63,7 @@ export default function Contact() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }}
             >
-              <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Get in Touch / 문의하기</span>
+              <span className="text-jsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Get in Touch / 문의하기</span>
               <h1 className="text-navy text-5xl font-black tracking-tighter uppercase leading-none mb-8">
                 CONTACT US
               </h1>
@@ -63,32 +75,32 @@ export default function Contact() {
               <div className="space-y-8">
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-white rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
-                    <Phone className="text-wsl-orange" size={24} />
+                    <Phone className="text-jsl-orange" size={24} />
                   </div>
                   <div>
                     <h4 className="text-navy font-black text-sm uppercase tracking-widest mb-1">Phone</h4>
-                    <p className="text-slate-600 font-bold text-lg">702-979-2438</p>
+                    <p className="text-slate-600 font-bold text-lg">031-632-1584</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-white rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
-                    <Mail className="text-wsl-orange" size={24} />
+                    <Mail className="text-jsl-orange" size={24} />
                   </div>
                   <div>
                     <h4 className="text-navy font-black text-sm uppercase tracking-widest mb-1">Email</h4>
-                    <p className="text-slate-600 font-bold text-lg">info@wslvegas.com</p>
+                    <p className="text-slate-600 font-bold text-lg">byujinman12831@gmail.com</p>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-6">
                   <div className="w-12 h-12 bg-white rounded-2xl shadow-md flex items-center justify-center flex-shrink-0">
-                    <MapPin className="text-wsl-orange" size={24} />
+                    <MapPin className="text-jsl-orange" size={24} />
                   </div>
                   <div>
                     <h4 className="text-navy font-black text-sm uppercase tracking-widest mb-1">Location</h4>
                     <p className="text-slate-600 font-bold text-lg leading-tight">
-                      3101 Spring Mountain Rd. Ste 1<br />Las Vegas NV 89102
+                      경기도 이천시 이섭대천로 1272-14<br />1층 102호 JM 유학원
                     </p>
                   </div>
                 </div>
@@ -104,7 +116,7 @@ export default function Contact() {
             >
               <div className="mb-10">
                 <h2 className="text-navy text-3xl font-black tracking-tight mb-2">교육 상담 신청</h2>
-                <div className="w-12 h-1 bg-wsl-orange"></div>
+                <div className="w-12 h-1 bg-jsl-orange"></div>
               </div>
 
               {submitted ? (
@@ -125,6 +137,7 @@ export default function Contact() {
                     <label className="block text-navy font-black text-xs uppercase tracking-widest mb-2 ml-1">Name / 성함</label>
                     <input
                       type="text"
+                      name="name"
                       placeholder="성함을 입력해주세요"
                       className="w-full bg-gray-50 border-none rounded-2xl p-5 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                       required
@@ -135,6 +148,7 @@ export default function Contact() {
                       <label className="block text-navy font-black text-xs uppercase tracking-widest mb-2 ml-1">Phone / 연락처</label>
                       <input
                         type="tel"
+                        name="phone"
                         placeholder="010-0000-0000"
                         className="w-full bg-gray-50 border-none rounded-2xl p-5 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                         required
@@ -144,6 +158,7 @@ export default function Contact() {
                       <label className="block text-navy font-black text-xs uppercase tracking-widest mb-2 ml-1">Email / 이메일</label>
                       <input
                         type="email"
+                        name="email"
                         placeholder="example@mail.com"
                         className="w-full bg-gray-50 border-none rounded-2xl p-5 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                         required
@@ -153,6 +168,7 @@ export default function Contact() {
                   <div>
                     <label className="block text-navy font-black text-xs uppercase tracking-widest mb-2 ml-1">Message / 문의 내용</label>
                     <textarea
+                      name="message"
                       placeholder="문의 내용을 적어주세요."
                       rows={5}
                       className="w-full bg-gray-50 border-none rounded-2xl p-5 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all resize-none"
@@ -161,7 +177,7 @@ export default function Contact() {
                   </div>
                   <button
                     type="submit"
-                    className="w-full bg-navy text-white py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:bg-wsl-orange transition-all shadow-lg mt-8 group"
+                    className="w-full bg-navy text-white py-6 rounded-2xl font-black text-xl flex items-center justify-center gap-3 hover:bg-jsl-orange transition-all shadow-lg mt-8 group"
                   >
                     상담 보내기 
                     <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
@@ -177,7 +193,7 @@ export default function Contact() {
       <footer className="bg-white py-12 border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">
-            © 2026 WSL — WILLIAM'S SCHOOL OF LANGUAGES. ALL RIGHTS RESERVED.
+            © 2026 JSL — JAMES'S SCHOOL OF LANGUAGES. ALL RIGHTS RESERVED.
           </p>
         </div>
       </footer>

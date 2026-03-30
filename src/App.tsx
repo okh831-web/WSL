@@ -30,13 +30,14 @@ import {
   Quote,
   Send
 } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import FAQ from './FAQ';
 import Safety from './Safety';
 import Contact from './Contact';
+import MOU from './MOU';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -49,6 +50,23 @@ function ScrollToTop() {
 }
 
 function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const name = formData.get('name') as string;
+    const phone = formData.get('phone') as string;
+    const email = formData.get('email') as string;
+    const message = formData.get('message') as string;
+
+    const subject = encodeURIComponent(`[교육 상담 신청] ${name}님`);
+    const body = encodeURIComponent(
+      `성함: ${name}\n연락처: ${phone}\n이메일: ${email}\n\n문의 내용:\n${message}`
+    );
+
+    window.location.href = `mailto:byujinman12831@gmail.com?subject=${subject}&body=${body}`;
+    onClose();
+  };
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -77,10 +95,11 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               <h2 className="text-navy text-3xl font-black tracking-tight">교육 상담 신청</h2>
             </div>
 
-            <form className="space-y-4" onSubmit={(e) => { e.preventDefault(); alert('상담 신청이 완료되었습니다.'); onClose(); }}>
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <input
                   type="text"
+                  name="name"
                   placeholder="성함"
                   className="w-full bg-gray-50 border-none rounded-xl p-4 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                   required
@@ -89,12 +108,14 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               <div className="grid grid-cols-2 gap-4">
                 <input
                   type="tel"
+                  name="phone"
                   placeholder="연락처"
                   className="w-full bg-gray-50 border-none rounded-xl p-4 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                   required
                 />
                 <input
                   type="email"
+                  name="email"
                   placeholder="이메일"
                   className="w-full bg-gray-50 border-none rounded-xl p-4 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all"
                   required
@@ -102,6 +123,7 @@ function ContactModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => voi
               </div>
               <div>
                 <textarea
+                  name="message"
                   placeholder="문의 내용을 적어주세요."
                   rows={4}
                   className="w-full bg-gray-50 border-none rounded-xl p-4 text-navy font-bold placeholder:text-slate-300 focus:ring-2 focus:ring-navy/5 transition-all resize-none"
@@ -139,6 +161,7 @@ function Home() {
     { name: 'WHY', href: '/#about' },
     { name: 'EXPLORE', href: '/#locations' },
     { name: 'PARTICIPANTS', href: '/#participants' },
+    { name: 'MOU', href: '/mou' },
     { name: 'SAFETY', href: '/safety' },
     { name: 'TESTIMONIALS', href: '/#testimonials' },
     { name: 'CONTACT', href: '/#contact' },
@@ -154,7 +177,7 @@ function Home() {
               <GraduationCap className="text-navy" size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-bold text-sm tracking-tight leading-none">WSL — WILLIAM'S SCHOOL OF LANGUAGES</span>
+              <span className="text-white font-bold text-sm tracking-tight leading-none">JSL — JAMES'S SCHOOL OF LANGUAGES</span>
               <span className="text-blue-300 text-[10px] font-bold tracking-wider">ENGLISH TRAVEL ABROAD PROGRAM</span>
             </div>
           </div>
@@ -171,7 +194,7 @@ function Home() {
                       window.scrollTo({ top: 0, behavior: 'smooth' });
                     }
                   }}
-                  className="text-white text-xs font-bold hover:text-wsl-orange transition-colors"
+                  className="text-white text-xs font-bold hover:text-jsl-orange transition-colors"
                 >
                   {link.name}
                 </Link>
@@ -192,7 +215,7 @@ function Home() {
                       }
                     }
                   }}
-                  className="text-white text-xs font-bold hover:text-wsl-orange transition-colors"
+                  className="text-white text-xs font-bold hover:text-jsl-orange transition-colors"
                 >
                   {link.name}
                 </a>
@@ -200,7 +223,7 @@ function Home() {
             ))}
             <a 
               href="/#contact"
-              className="bg-wsl-orange text-white px-5 py-2 rounded text-xs font-black hover:brightness-110 transition-all"
+              className="bg-jsl-orange text-white px-5 py-2 rounded text-xs font-black hover:brightness-110 transition-all"
             >
               BOOK NOW
             </a>
@@ -268,7 +291,7 @@ function Home() {
             <a 
               href="/#contact"
               onClick={() => setIsMenuOpen(false)}
-              className="bg-wsl-orange text-white px-10 py-4 rounded font-black text-xl"
+              className="bg-jsl-orange text-white px-10 py-4 rounded font-black text-xl"
             >
               BOOK NOW
             </a>
@@ -293,7 +316,7 @@ function Home() {
         <div className="absolute top-0 right-0 h-full w-full lg:w-1/2 z-10 pointer-events-none">
           {/* Orange Curve Shape */}
           <div 
-            className="absolute inset-0 bg-wsl-orange hidden lg:block"
+            className="absolute inset-0 bg-jsl-orange hidden lg:block"
             style={{ 
               clipPath: 'polygon(30% 0, 100% 0, 100% 100%, 15% 100%, 40% 50%)',
               opacity: 0.95
@@ -316,16 +339,26 @@ function Home() {
 
         {/* Floating Paper Plane Animation */}
         <motion.div 
+          initial={{ x: "100vw", y: "100vh", rotate: -145, opacity: 0 }}
           animate={{ 
-            x: [0, 100, 200, 300], 
-            y: [0, -50, -20, -100],
-            rotate: [0, -10, 10, -20]
+            x: ["100vw", "60vw", "28vw"], 
+            y: ["100vh", "50vh", "12vh"],
+            rotate: [-145, -155, -145],
+            opacity: [0, 1, 1]
           }}
-          transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-          className="absolute top-1/3 left-1/2 z-20 text-wsl-orange opacity-80 hidden md:block"
+          transition={{ 
+            duration: 6, 
+            repeat: Infinity, 
+            repeatDelay: 1,
+            ease: "easeOut"
+          }}
+          className="absolute z-30 text-jsl-orange hidden md:block pointer-events-none"
         >
-          <Send size={40} className="rotate-45" />
-          <div className="absolute top-10 left-0 w-40 h-20 border-t-2 border-dashed border-wsl-orange/30 rounded-full -rotate-12"></div>
+          <div className="relative">
+            <svg viewBox="0 0 24 24" fill="currentColor" className="w-16 h-16 drop-shadow-2xl">
+              <path d="M3.4 20.4l17.45-7.48c.81-.35.81-1.49 0-1.84L3.4 3.6c-.66-.29-1.39.2-1.39.91L2 9.12c0 .5.37.93.87.99L17 12 2.87 13.88c-.5.07-.87.5-.87 1l.01 4.61c0 .71.73 1.2 1.39.91z" />
+            </svg>
+          </div>
         </motion.div>
 
         {/* Content Overlay */}
@@ -337,9 +370,9 @@ function Home() {
             className="max-w-3xl"
           >
             {/* Institution Name Tag */}
-            <div className="inline-block bg-wsl-orange px-6 py-2 rounded-md mb-8 shadow-lg">
+            <div className="inline-block bg-jsl-orange px-6 py-2 rounded-md mb-8 shadow-lg">
               <span className="text-white font-black text-sm md:text-lg tracking-wider uppercase">
-                WILLIAM'S SCHOOL OF LANGUAGES
+                JAMES'S SCHOOL OF LANGUAGES
               </span>
             </div>
 
@@ -350,7 +383,7 @@ function Home() {
                 TRAVEL ABROAD<br />
                 PROGRAM
               </h1>
-              <div className="h-1.5 w-24 bg-wsl-orange"></div>
+              <div className="h-1.5 w-24 bg-jsl-orange"></div>
               <h2 className="text-blue-100 text-xl md:text-3xl font-bold tracking-tight">
                 미국 어학연수 프로그램
               </h2>
@@ -361,7 +394,7 @@ function Home() {
               <p className="text-white/90 text-xl md:text-2xl font-medium italic">
                 "Where language meets culture"
               </p>
-              <p className="text-wsl-orange text-lg font-bold">
+              <p className="text-jsl-orange text-lg font-bold">
                 언어와 문화가 만나는 곳
               </p>
             </div>
@@ -372,7 +405,7 @@ function Home() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 href="/#contact"
-                className="bg-white text-navy px-10 py-4 rounded-full font-black text-lg shadow-xl hover:bg-wsl-orange hover:text-white transition-all flex items-center gap-3"
+                className="bg-white text-navy px-10 py-4 rounded-full font-black text-lg shadow-xl hover:bg-jsl-orange hover:text-white transition-all flex items-center gap-3"
               >
                 BOOK NOW / 지금 예약하기 <ArrowRight size={22} />
               </motion.a>
@@ -387,20 +420,20 @@ function Home() {
         </div>
       </section>
 
-      {/* Why WSL? Section - Professional Editorial Style */}
+      {/* Why JSL? Section - Professional Editorial Style */}
       <section id="about" className="py-32 bg-white relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-gray-50 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl opacity-50"></div>
         
         <div className="max-w-7xl mx-auto px-6 relative z-10">
           <div className="flex flex-col lg:flex-row items-end justify-between mb-24 gap-8">
             <div className="max-w-2xl">
-              <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Core Excellence / 핵심 가치</span>
+              <span className="text-jsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Core Excellence / 핵심 가치</span>
               <h2 className="text-navy text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.9]">
                 WHY CHOOSE <br /><span className="text-slate-200">OUR PROGRAM?</span>
               </h2>
-              <h3 className="text-navy/40 text-2xl md:text-3xl font-bold mt-4 uppercase">왜 WSL 프로그램을 선택해야 할까요?</h3>
+              <h3 className="text-navy/40 text-2xl md:text-3xl font-bold mt-4 uppercase">왜 JSL 프로그램을 선택해야 할까요?</h3>
             </div>
-            <div className="w-32 h-2 bg-wsl-orange hidden lg:block mb-6"></div>
+            <div className="w-32 h-2 bg-jsl-orange hidden lg:block mb-6"></div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-20">
@@ -412,8 +445,8 @@ function Home() {
                 desc: "10 years of excellence since 2017. Our bilingual instructors provide personalized attention in real-world settings.",
                 descKo: "2017년부터 시작된 10년의 노하우. 이중 언어 강사진이 실전 환경에서 개별 맞춤 교육을 제공합니다.",
                 num: "01",
-                color: "text-wsl-orange",
-                bgColor: "group-hover:bg-wsl-orange"
+                color: "text-jsl-orange",
+                bgColor: "group-hover:bg-jsl-orange"
               },
               { 
                 icon: <ShieldCheck size={36} />, 
@@ -455,7 +488,7 @@ function Home() {
                   {item.title === "Safety & Care" && (
                     <Link 
                       to="/safety" 
-                      className="inline-flex items-center gap-2 text-navy font-black text-xs uppercase tracking-widest hover:text-wsl-orange transition-colors"
+                      className="inline-flex items-center gap-2 text-navy font-black text-xs uppercase tracking-widest hover:text-jsl-orange transition-colors"
                     >
                       Learn More <ArrowRight size={14} />
                     </Link>
@@ -472,7 +505,7 @@ function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-24 gap-8">
             <div>
-              <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Seasonal Journeys / 시즌별 여정</span>
+              <span className="text-jsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Seasonal Journeys / 시즌별 여정</span>
               <h2 className="text-navy text-5xl md:text-7xl font-black tracking-tighter uppercase leading-[0.8]">
                 EXPLORE <br /><span className="text-slate-300">DESTINATIONS</span>
               </h2>
@@ -497,7 +530,7 @@ function Home() {
                 referrerPolicy="no-referrer"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/30 to-transparent"></div>
-              <div className="absolute top-10 left-10 bg-wsl-orange text-white px-8 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs shadow-lg">
+              <div className="absolute top-10 left-10 bg-jsl-orange text-white px-8 py-3 rounded-full font-black uppercase tracking-[0.2em] text-xs shadow-lg">
                 Summer Season
               </div>
               <div className="absolute bottom-12 left-12 right-12">
@@ -505,13 +538,13 @@ function Home() {
                 <div className="grid grid-cols-2 gap-4 mb-10">
                   {["Grand Canyon", "Red Rock Canyon", "Joshua Tree", "Zion Park"].map(item => (
                     <div key={item} className="flex items-center gap-3 text-white/90 font-bold text-sm">
-                      <div className="w-2 h-2 bg-wsl-orange rounded-full"></div> {item}
+                      <div className="w-2 h-2 bg-jsl-orange rounded-full"></div> {item}
                     </div>
                   ))}
                 </div>
                 <button 
                   onClick={() => setSelectedProgram('summer')}
-                  className="w-full bg-white text-navy py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-wsl-orange hover:text-white transition-all duration-500 shadow-xl"
+                  className="w-full bg-white text-navy py-5 rounded-2xl font-black uppercase tracking-widest hover:bg-jsl-orange hover:text-white transition-all duration-500 shadow-xl"
                 >
                   View Program Details
                 </button>
@@ -558,7 +591,7 @@ function Home() {
       <section id="participants" className="py-32 bg-white">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-24">
-            <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Inclusive Learning / 모두를 위한 교육</span>
+            <span className="text-jsl-orange font-black tracking-[0.4em] uppercase text-xs mb-6 block">Inclusive Learning / 모두를 위한 교육</span>
             <h2 className="text-navy text-5xl md:text-6xl font-black tracking-tighter uppercase leading-none mb-4">FOR ALL AGES</h2>
             <h3 className="text-navy/40 text-2xl font-bold uppercase">모든 연령대를 위한 프로그램</h3>
             <p className="text-slate-500 font-bold mt-6 max-w-xl mx-auto">Adaptable for middle & high school students, adults, and families.<br />중·고등학생, 성인, 그리고 가족 단위까지 모두 참여 가능합니다.</p>
@@ -603,7 +636,7 @@ function Home() {
       <section id="testimonials" className="py-24 bg-gray-50">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
-            <span className="text-wsl-orange font-black tracking-[0.4em] uppercase text-xs mb-4 block">Success Stories / 성공 사례</span>
+            <span className="text-jsl-orange font-black tracking-[0.4em] uppercase text-xs mb-4 block">Success Stories / 성공 사례</span>
             <h2 className="text-navy text-5xl md:text-6xl font-black tracking-tighter uppercase leading-[0.8] mb-2">TESTIMONIALS</h2>
             <h3 className="text-navy/40 text-xl md:text-2xl font-bold uppercase">수강 후기</h3>
           </div>
@@ -614,7 +647,7 @@ function Home() {
                 img: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=200",
                 name: "Sarah J.",
                 role: "High School Student",
-                text: "William's School of Languages was a life-changing experience. I gained so much confidence in my English and made lifelong friends."
+                text: "James's School of Languages was a life-changing experience. I gained so much confidence in my English and made lifelong friends."
               },
               {
                 img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200",
@@ -626,15 +659,15 @@ function Home() {
                 img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200",
                 name: "Elena M.",
                 role: "Parent",
-                text: "Our family program was perfectly organized. The safety and care provided by WSL allowed us to focus on learning and exploring together."
+                text: "Our family program was perfectly organized. The safety and care provided by JSL allowed us to focus on learning and exploring together."
               }
             ].map((item, i) => (
               <div key={i} className="bg-gray-50 p-10 rounded-[2.5rem] flex flex-col items-center text-center group hover:bg-navy transition-all duration-500 shadow-xl hover:shadow-navy/20">
-                <div className="w-24 h-24 rounded-full overflow-hidden mb-8 border-4 border-wsl-orange shadow-lg group-hover:scale-110 transition-transform duration-500">
+                <div className="w-24 h-24 rounded-full overflow-hidden mb-8 border-4 border-jsl-orange shadow-lg group-hover:scale-110 transition-transform duration-500">
                   <img src={item.img} alt="User" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
                 </div>
                 <h4 className="text-navy group-hover:text-white font-black text-xl mb-1 transition-colors">{item.name}</h4>
-                <p className="text-wsl-orange font-bold text-xs uppercase tracking-widest mb-6">{item.role}</p>
+                <p className="text-jsl-orange font-bold text-xs uppercase tracking-widest mb-6">{item.role}</p>
                 <p className="text-slate-500 group-hover:text-slate-300 italic font-medium leading-relaxed transition-colors">
                   "{item.text}"
                 </p>
@@ -655,8 +688,8 @@ function Home() {
                   <GraduationCap className="text-white" size={28} />
                 </div>
                 <div className="flex flex-col">
-                  <span className="text-navy font-black text-2xl tracking-tighter">WSL</span>
-                  <span className="text-slate-400 text-[10px] font-bold uppercase">William's School of Languages</span>
+                  <span className="text-navy font-black text-2xl tracking-tighter">JSL</span>
+                  <span className="text-slate-400 text-[10px] font-bold uppercase">James's School of Languages</span>
                 </div>
               </div>
               <p className="text-slate-400 text-xs font-bold uppercase tracking-widest">ENGLISH TRAVEL ABROAD PROGRAM</p>
@@ -668,19 +701,19 @@ function Home() {
                 <h4 className="text-navy font-black text-sm uppercase tracking-widest">CONTACT</h4>
                 <div className="space-y-3">
                   <div className="flex items-center gap-3 text-slate-600 font-bold text-sm">
-                    <Phone size={16} className="text-wsl-orange" /> 702-979-2438
+                    <Phone size={16} className="text-jsl-orange" /> 031-632-1584
                   </div>
                   <div className="flex items-center gap-3 text-slate-600 font-bold text-sm">
-                    <Mail size={16} className="text-wsl-orange" /> info@wslvegas.com
+                    <Mail size={16} className="text-jsl-orange" /> byujinman12831@gmail.com
                   </div>
                   <div className="flex items-start gap-3 text-slate-600 font-bold text-sm">
-                    <MapPin size={16} className="text-wsl-orange mt-1 flex-shrink-0" /> 
-                    <span>3101 Spring Mountain Rd. Ste 1<br />Las Vegas NV 89102</span>
+                    <MapPin size={16} className="text-jsl-orange mt-1 flex-shrink-0" /> 
+                    <span>경기도 이천시 이섭대천로 1272-14<br />1층 102호 JM 유학원</span>
                   </div>
                 </div>
                 <button 
                   onClick={() => setIsContactModalOpen(true)}
-                  className="mt-6 bg-navy text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-wsl-orange transition-all shadow-md"
+                  className="mt-6 bg-navy text-white px-6 py-3 rounded-xl font-black text-xs uppercase tracking-widest hover:bg-jsl-orange transition-all shadow-md"
                 >
                   Request Consultation
                 </button>
@@ -688,13 +721,13 @@ function Home() {
 
               <div className="space-y-4">
                 <div className="flex gap-4 mb-6">
-                  <Facebook className="text-navy hover:text-wsl-orange cursor-pointer" size={20} />
-                  <Twitter className="text-navy hover:text-wsl-orange cursor-pointer" size={20} />
-                  <Instagram className="text-navy hover:text-wsl-orange cursor-pointer" size={20} />
+                  <Facebook className="text-navy hover:text-jsl-orange cursor-pointer" size={20} />
+                  <Twitter className="text-navy hover:text-jsl-orange cursor-pointer" size={20} />
+                  <Instagram className="text-navy hover:text-jsl-orange cursor-pointer" size={20} />
                 </div>
                 <div className="space-y-2">
-                  <Link to="/faq" className="block text-navy font-black text-sm uppercase hover:text-wsl-orange">F.A.Q.</Link>
-                  <Link to="/contact" className="block text-navy font-black text-sm uppercase hover:text-wsl-orange">REGISTRATION</Link>
+                  <Link to="/faq" className="block text-navy font-black text-sm uppercase hover:text-jsl-orange">F.A.Q.</Link>
+                  <Link to="/contact" className="block text-navy font-black text-sm uppercase hover:text-jsl-orange">REGISTRATION</Link>
                 </div>
               </div>
             </div>
@@ -728,7 +761,7 @@ function Home() {
 
               <div className="flex flex-col md:flex-row h-full max-h-[90vh] overflow-y-auto md:overflow-hidden">
                 {/* Modal Sidebar/Image */}
-                <div className={`w-full md:w-1/3 p-12 flex flex-col justify-between text-white ${selectedProgram === 'summer' ? 'bg-wsl-orange' : 'bg-navy'}`}>
+                <div className={`w-full md:w-1/3 p-12 flex flex-col justify-between text-white ${selectedProgram === 'summer' ? 'bg-jsl-orange' : 'bg-navy'}`}>
                   <div>
                     <span className="font-black tracking-[0.3em] uppercase text-[10px] opacity-70 block mb-4">
                       {selectedProgram === 'summer' ? 'Summer Season' : 'Winter Season'}
@@ -751,7 +784,7 @@ function Home() {
                 <div className="w-full md:w-2/3 p-12 md:p-16 bg-white overflow-y-auto">
                   <div className="mb-12">
                     <h3 className="text-navy text-2xl font-black uppercase tracking-tight mb-2">Program Options</h3>
-                    <div className="w-12 h-1 bg-wsl-orange"></div>
+                    <div className="w-12 h-1 bg-jsl-orange"></div>
                   </div>
 
                   <div className="space-y-10">
@@ -759,7 +792,7 @@ function Home() {
                       <>
                         <div className="group">
                           <div className="flex items-center gap-4 mb-3">
-                            <span className="bg-wsl-orange/10 text-wsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">01</span>
+                            <span className="bg-jsl-orange/10 text-jsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">01</span>
                             <h4 className="text-navy font-black text-xl uppercase tracking-tight">Option 1: Red Rock Canyon, Nevada</h4>
                           </div>
                           <p className="text-slate-500 font-medium leading-relaxed pl-14">
@@ -768,7 +801,7 @@ function Home() {
                         </div>
                         <div className="group">
                           <div className="flex items-center gap-4 mb-3">
-                            <span className="bg-wsl-orange/10 text-wsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">02</span>
+                            <span className="bg-jsl-orange/10 text-jsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">02</span>
                             <h4 className="text-navy font-black text-xl uppercase tracking-tight">Option 2: Joshua Tree, California</h4>
                           </div>
                           <p className="text-slate-500 font-medium leading-relaxed pl-14">
@@ -777,7 +810,7 @@ function Home() {
                         </div>
                         <div className="group">
                           <div className="flex items-center gap-4 mb-3">
-                            <span className="bg-wsl-orange/10 text-wsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">03</span>
+                            <span className="bg-jsl-orange/10 text-jsl-orange w-10 h-10 rounded-full flex items-center justify-center font-black text-sm">03</span>
                             <h4 className="text-navy font-black text-xl uppercase tracking-tight">Option 3: Grand Canyon, Arizona</h4>
                           </div>
                           <p className="text-slate-500 font-medium leading-relaxed pl-14">
@@ -814,7 +847,7 @@ function Home() {
                   <div className="mt-16 pt-10 border-t border-slate-100 flex justify-end">
                     <button 
                       onClick={() => setSelectedProgram(null)}
-                      className="bg-navy text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-wsl-orange transition-all shadow-lg"
+                      className="bg-navy text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest hover:bg-jsl-orange transition-all shadow-lg"
                     >
                       Close Details
                     </button>
@@ -837,6 +870,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/faq" element={<FAQ />} />
+        <Route path="/mou" element={<MOU />} />
         <Route path="/safety" element={<Safety />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>

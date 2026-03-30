@@ -14,8 +14,8 @@ import { Link } from 'react-router-dom';
 
 const faqData = [
   {
-    question: "What is the age range for the WSL program?",
-    questionKr: "WSL 프로그램의 참가 가능 연령대는 어떻게 되나요?",
+    question: "What is the age range for the JSL program?",
+    questionKr: "JSL 프로그램의 참가 가능 연령대는 어떻게 되나요?",
     answer: "Our programs are primarily designed for middle and high school students (ages 12-18). However, we also offer specialized family programs and adult groups upon request.",
     answerKr: "저희 프로그램은 주로 중고등학생(12-18세)을 대상으로 설계되었습니다. 하지만 요청에 따라 특화된 가족 프로그램 및 성인 그룹 프로그램도 제공하고 있습니다."
   },
@@ -58,13 +58,13 @@ export default function FAQ() {
               <GraduationCap className="text-navy" size={24} />
             </div>
             <div className="flex flex-col">
-              <span className="text-white font-bold text-sm tracking-tight leading-none">WSL — WILLIAM'S SCHOOL OF LANGUAGES</span>
+              <span className="text-white font-bold text-sm tracking-tight leading-none">JSL — JAMES'S SCHOOL OF LANGUAGES</span>
               <span className="text-blue-300 text-[10px] font-bold tracking-wider">ENGLISH TRAVEL ABROAD PROGRAM</span>
             </div>
           </Link>
           <Link 
             to="/" 
-            className="flex items-center gap-2 text-white text-xs font-bold hover:text-wsl-orange transition-colors"
+            className="flex items-center gap-2 text-white text-xs font-bold hover:text-jsl-orange transition-colors"
           >
             <ArrowLeft size={16} /> BACK TO HOME
           </Link>
@@ -79,13 +79,13 @@ export default function FAQ() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 bg-wsl-orange/10 text-wsl-orange px-4 py-2 rounded-full mb-4">
+            <div className="inline-flex items-center gap-2 bg-jsl-orange/10 text-jsl-orange px-4 py-2 rounded-full mb-4">
               <HelpCircle size={18} />
               <span className="text-xs font-black uppercase tracking-widest">Support Center</span>
             </div>
             <h1 className="text-5xl md:text-7xl font-black text-navy tracking-tighter uppercase leading-[0.8] mb-4">
               FREQUENTLY ASKED <br />
-              <span className="text-wsl-orange">QUESTIONS</span>
+              <span className="text-jsl-orange">QUESTIONS</span>
             </h1>
             <p className="text-slate-500 font-bold text-sm uppercase tracking-widest opacity-80">
               자주 묻는 질문들 — 궁금한 점을 확인해보세요
@@ -118,7 +118,7 @@ export default function FAQ() {
                       {faq.questionKr}
                     </p>
                   </div>
-                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeIndex === index ? 'bg-wsl-orange text-white' : 'bg-gray-100 text-navy'}`}>
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center transition-colors ${activeIndex === index ? 'bg-jsl-orange text-white' : 'bg-gray-100 text-navy'}`}>
                     {activeIndex === index ? <Minus size={20} /> : <Plus size={20} />}
                   </div>
                 </button>
@@ -132,7 +132,7 @@ export default function FAQ() {
                       transition={{ duration: 0.3 }}
                     >
                       <div className="px-8 pb-5 bg-gray-50/50">
-                        <div className="w-10 h-0.5 bg-wsl-orange mb-3"></div>
+                        <div className="w-10 h-0.5 bg-jsl-orange mb-3"></div>
                         <p className="text-slate-600 font-medium text-sm md:text-base leading-relaxed mb-1.5">
                           {faq.answer}
                         </p>
@@ -154,20 +154,20 @@ export default function FAQ() {
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-4xl font-black uppercase tracking-tighter mb-8">
             Still Have Questions? <br />
-            <span className="text-wsl-orange">Contact Us Today</span>
+            <span className="text-jsl-orange">Contact Us Today</span>
           </h2>
           <div className="grid md:grid-cols-3 gap-8">
             <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
-              <Phone className="mx-auto mb-4 text-wsl-orange" size={32} />
-              <p className="font-black text-lg">702-979-2438</p>
+              <Phone className="mx-auto mb-4 text-jsl-orange" size={32} />
+              <p className="font-black text-lg">031-632-1584</p>
             </div>
             <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
-              <Mail className="mx-auto mb-4 text-wsl-orange" size={32} />
-              <p className="font-black text-lg">info@wslvegas.com</p>
+              <Mail className="mx-auto mb-4 text-jsl-orange" size={32} />
+              <p className="font-black text-lg">byujinman12831@gmail.com</p>
             </div>
             <div className="bg-white/5 p-8 rounded-3xl border border-white/10">
-              <MapPin className="mx-auto mb-4 text-wsl-orange" size={32} />
-              <p className="font-black text-sm">3101 Spring Mountain Rd.<br />Las Vegas NV 89102</p>
+              <MapPin className="mx-auto mb-4 text-jsl-orange" size={32} />
+              <p className="font-black text-sm">경기도 이천시 이섭대천로 1272-14<br />1층 102호 JM 유학원</p>
             </div>
           </div>
         </div>
@@ -176,7 +176,7 @@ export default function FAQ() {
       {/* Footer */}
       <footer className="py-12 bg-white border-t border-slate-100 text-center">
         <p className="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em]">
-          © 2026 William's School of Languages. All Rights Reserved.
+          © 2026 James's School of Languages. All Rights Reserved.
         </p>
       </footer>
     </div>
